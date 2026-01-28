@@ -13,33 +13,6 @@ O SGCC é um sistema desenvolvido para digitalizar, automatizar e otimizar a ges
 - **JPA/Hibernate**: Para mapeamento objeto-relacional
 - **Lombok**: Para redução de código boilerplate
 
-## Configuração do Ambiente
-
-### Pré-requisitos
-
-- Java 17 ou superior
-- Maven 3.8+
-- PostgreSQL 13+
-
-### Configuração
-
-1. Clone o repositório:
-   ```bash
-   git clone [URL_DO_REPOSITÓRIO]
-   cd dacor-web-api
-   ```
-
-2. Configure o banco de dados:
-   - Crie um banco de dados PostgreSQL chamado `dacor_web_db`
-   - Atualize as credenciais no arquivo `application.properties` se necessário
-
-3. Execute o projeto:
-   ```bash
-   ./mvnw spring-boot:run
-   ```
-
-4. Acesse a aplicação em: [http://localhost:8080](http://localhost:8080)
-
 ## Estrutura do Projeto
 
 ```
@@ -113,17 +86,6 @@ src/main/java/br/com/dacorweb/api/
 - `POST /api/pagamentos` - Registra um novo pagamento
 - `GET /api/pagamentos/cliente/{clienteId}` - Lista pagamentos de um cliente
 
-## Próximos Passos
-
-- [x] Criar entidades principais
-- [ ] Implementar autenticação e autorização
-- [ ] Desenvolver controladores REST
-- [ ] Implementar validações de entrada
-- [ ] Adicionar tratamento de erros
-- [ ] Implementar testes unitários e de integração
-- [ ] Configurar documentação da API (Swagger/OpenAPI)
-- [ ] Implementar relatórios e estatísticas
-- [ ] Adicionar suporte a upload de imagens para as notas
 
 ## Licença
 
