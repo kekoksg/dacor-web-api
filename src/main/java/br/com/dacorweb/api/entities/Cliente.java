@@ -1,5 +1,6 @@
 package br.com.dacorweb.api.entities;
 
+import br.com.dacorweb.api.entities.enums.TipoPessoa;
 import jakarta.persistence.*;
 import lombok.Data;
 import br.com.dacorweb.api.entities.enums.StatusCliente;
@@ -17,7 +18,11 @@ public class Cliente {
     
     @Column(nullable = false)
     private String nome;
-    
+
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private TipoPessoa tipoPessoa;
+
     @Column(name = "cpf_cnpj", nullable = false, unique = true, length = 14)
     private String cpfCnpj;
     

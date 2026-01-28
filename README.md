@@ -2,7 +2,7 @@
 
 ## Visão Geral
 
-O SGCC é um sistema desenvolvido para digitalizar, automatizar e otimizar a gestão de contas de clientes, eliminando o processo manual baseado em papel e planilhas. O sistema permite o gerenciamento de usuários, clientes, notas fiscais e pagamentos de forma integrada.
+O SGCC é um sistema desenvolvido para digitalizar, automatizar e otimizar a gestão de contas de clientes, eliminando o processo manual baseado em papel e planilhas. O sistema permite o gerenciamento de usuários, clientes, notas fiscais e pagamentos de forma integrada, com segurança baseada em JWT (JSON Web Tokens).
 
 ## Tecnologias Utilizadas
 
@@ -11,6 +11,8 @@ O SGCC é um sistema desenvolvido para digitalizar, automatizar e otimizar a ges
 - **Java**: 17
 - **Maven**: Para gerenciamento de dependências
 - **JPA/Hibernate**: Para mapeamento objeto-relacional
+- **Spring Security**: Para autenticação e autorização
+- **JWT (JSON Web Tokens)**: Para autenticação stateless
 - **Lombok**: Para redução de código boilerplate
 
 ## Configuração do Ambiente
@@ -31,23 +33,78 @@ O SGCC é um sistema desenvolvido para digitalizar, automatizar e otimizar a ges
 
 2. Configure o banco de dados:
    - Crie um banco de dados PostgreSQL chamado `dacor_web_db`
-   - Atualize as credenciais no arquivo `application.properties` se necessário
+   - As credenciais padrão estão configuradas no `application.properties`
 
 3. Execute o projeto:
    ```bash
    ./mvnw spring-boot:run
    ```
 
-4. Acesse a aplicação em: [http://localhost:8080](http://localhost:8080)
+4. Acesse a aplicação em: [http://localhost:8081](http://localhost:8081)
+
+## Autenticação JWT
+
+### Registro de Usuário
+
+```http
+POST /api/auth/register
+Content-Type: application/json
+
+{
+  "nome": "Admin",
+  "cpf": "12345678901",
+  "email": "admin@example.com",
+  "senha": "suaSenha123",
+  "perfil": "DONO"
+}
+```
+
+### Login
+
+```http
+POST /api/auth/login
+Content-Type: application/json
+
+{
+  "cpf": "12345678901",
+  "senha": "suaSenha123"
+}
+```
+
+Resposta:
+```json
+{
+  "token": "seu-jwt-token",
+  "type": "Bearer",
+  "id": 1,
+  "cpf": "12345678901",
+  "email": "admin@example.com",
+  "nome": "Admin",
+  "roles": ["ROLE_DONO"]
+}
+```
+
+### Uso do Token
+
+Para acessar rotas protegidas, inclua o token no cabeçalho:
+```
+Authorization: Bearer seu-jwt-token
+```
 
 ## Estrutura do Projeto
 
 ```
 src/main/java/br/com/dacorweb/api/
 ├── ApiApplication.java         # Classe principal da aplicação
-├── config/                     # Configurações do Spring
-├── controllers/                # Controladores REST
-├── entities/                   # Entidades JPA
+├── security/                   # Configurações de segurança
+│   ├── config/                # Configuração do Spring Security
+│   ├── controllers/           # Controladores de autenticação
+│   ├── dto/                   # Objetos de transferência de dados
+│   ├── jwt/                   # Classes relacionadas ao JWT
+│   └── services/              # Serviços de autenticação
+├── controllers/               # Controladores REST
+├── entities/                  # Entidades JPA
+└── repositories/              # Repositórios JPA
 │   ├── enums/                  # Enums do sistema
 │   │   ├── MetodoPagamento.java
 │   │   ├── PerfilUsuario.java
